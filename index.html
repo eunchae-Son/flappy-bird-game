@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102b28">
+  <title>Floffy Buddy · 플로피버디</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><a class="brand" href="./index.html"><span class="brand-icon">✦</span> floffy buddy<span class="edition">MINI ARCADE</span></a><button id="sound" class="icon-button" aria-label="소리 켜기" aria-pressed="false">소리 OFF</button></header>
+  <main>
+    <section class="intro"><div class="eyebrow"><span></span> A LITTLE FLAP, A BIG ADVENTURE</div><h1>작은 날갯짓,<br>끝없는 모험<span>!</span></h1><p>둥실둥실, 플로피와 함께 날아보세요.<br>파이프 사이를 통과하면 한 점씩 올라가요.</p><div class="controls"><kbd>SPACE</kbd><span>또는</span><kbd>클릭 / 터치</kbd><span>로 날기</span></div><div class="tip"><span>✧</span><p>서두르지 말고, 나만의 리듬으로.<br><strong>이번엔 조금 더 멀리 갈 수 있을 거예요.</strong></p></div></section>
+    <section class="game-section" aria-label="플로피버디 게임">
+      <div class="game-top"><span><i></i> THE SKY IS YOURS</span><span>01 / ENDLESS</span></div>
+      <div class="game-frame" id="frame">
+        <canvas id="game" width="480" height="640" tabindex="0" aria-label="플로피버디. 스페이스바 또는 터치로 날기. P 키로 일시정지."></canvas>
+        <div class="hud"><div><span>SCORE</span><b id="score">00</b></div><button id="pause" aria-label="일시정지" title="일시정지 (P)">Ⅱ</button><div><span>BEST</span><b id="best">00</b></div></div>
+        <div class="overlay" id="overlay"><div class="badge" id="badge">READY TO FLY?</div><h2 id="title">Hello, Floffy!</h2><p id="message">작은 친구의 첫 비행을 도와주세요.</p><button class="play" id="play">플레이 시작 <span>↗</span></button><small id="hint">스페이스바 또는 화면을 눌러 시작</small></div>
+      </div>
+      <div class="game-bottom"><span>✦ 가볍게 눌러, 높이 날아요</span><span>P 일시정지 · R 다시 시작</span></div>
+    </section>
+  </main>
+  <footer><span>MADE FOR YOUR LITTLE BREAK.</span><span>오늘의 최고 기록에 도전해 보세요 <span class="star">✦</span></span></footer>
+  <script src="game.js"></script>
+</body>
+</html>
