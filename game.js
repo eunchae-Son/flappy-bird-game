@@ -8,6 +8,36 @@ try { best = Number(localStorage.getItem('floffy-best')) || 0; } catch {}
 $('best').textContent = String(best).padStart(2, '0');
 let state = 'ready', bird, pipes, score, elapsed, spawn, last = 0, scenery = 0;
 let sound = false, audio;
+const birdColors = {
+  yellow: {name:'노랑',body:'#f1c65b',belly:'#ffe197',wing:'#deac43',tail:'#d7a943'},
+  pink: {name:'분홍',body:'#ec91b1',belly:'#ffd0e1',wing:'#cf6e94',tail:'#bf5e85'},
+  blue: {name:'하늘',body:'#78b7ec',belly:'#c6e6ff',wing:'#5092cf',tail:'#447fb8'},
+  purple: {name:'보라',body:'#b29ae3',belly:'#e2d5ff',wing:'#9173c5',tail:'#8062b3'},
+  mint: {name:'민트',body:'#70c9ab',belly:'#bef0dc',wing:'#47a98b',tail:'#388e75'}
+};
+let birdColor = 'yellow';
+try {
+  const saved = localStorage.getItem('floffy-color');
+  if(Object.hasOwn(birdColors, saved)) birdColor = saved;
+} catch {}
+function selectBirdColor(color) {
+  if(!Object.hasOwn(birdColors,color)) return;
+  birdColor = color;
+  $('color-name').textContent = birdColors[color].name;
+  document.querySelectorAll('[data-color]').forEach(button=>{
+    const selected = button.dataset.color === color;
+    button.setAttribute('aria-pressed',String(selected));
+    button.textContent = selected ? '✓' : '';
+  });
+  try { localStorage.setItem('floffy-color',color); } catch {}
+}
+document.querySelectorAll('[data-color]').forEach(button=>{
+  button.addEventListener('click',()=>{
+    if(state === 'playing') pause();
+    selectBirdColor(button.dataset.color);
+  });
+});
+selectBirdColor(birdColor);
 function tone(freq, duration = .08) {
   if (!sound) return;
   try {
@@ -87,9 +117,10 @@ function draw() {
   const idle=state==='ready', by=idle?220+Math.sin(scenery*3)*7:bird.y;
   ctx.save();ctx.translate(bird.x,by);ctx.rotate(state==='playing'?Math.max(-.35,Math.min(1.1,bird.v/650)):0);
   ellipse(-3,4,22,20,'#b6a44b33');
-  ctx.fillStyle='#d7a943';ctx.beginPath();ctx.moveTo(-17,-2);ctx.lineTo(-30,-12);ctx.lineTo(-26,7);ctx.closePath();ctx.fill();
-  ellipse(0,0,22,19,'#f1c65b');ellipse(5,5,15,12,'#ffe197');
-  ellipse(-10,5+Math.sin(scenery*20)*3,11,7,'#deac43');
+  const colors = birdColors[birdColor];
+  ctx.fillStyle=colors.tail;ctx.beginPath();ctx.moveTo(-17,-2);ctx.lineTo(-30,-12);ctx.lineTo(-26,7);ctx.closePath();ctx.fill();
+  ellipse(0,0,22,19,colors.body);ellipse(5,5,15,12,colors.belly);
+  ellipse(-10,5+Math.sin(scenery*20)*3,11,7,colors.wing);
   ellipse(10,-6,7,8,'#fffbed');ellipse(12,-6,3,4,'#274834');ellipse(13,-7,1,1,'white');
   ctx.fillStyle='#e5894b';ctx.beginPath();ctx.moveTo(20,-1);ctx.lineTo(31,3);ctx.lineTo(20,7);ctx.closePath();ctx.fill();
   ellipse(12,6,4,2.5,'#efab65');ctx.restore();

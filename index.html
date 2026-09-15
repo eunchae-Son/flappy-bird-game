@@ -12,6 +12,16 @@
   <main>
     <section class="intro"><div class="eyebrow"><span></span> A LITTLE FLAP, A BIG ADVENTURE</div><h1>작은 날갯짓,<br>끝없는 모험<span>!</span></h1><p>둥실둥실, 플로피와 함께 날아보세요.<br>파이프 사이를 통과하면 한 점씩 올라가요.</p><div class="controls"><kbd>SPACE</kbd><span>또는</span><kbd>클릭 / 터치</kbd><span>로 날기</span></div><div class="tip"><span>✧</span><p>서두르지 말고, 나만의 리듬으로.<br><strong>이번엔 조금 더 멀리 갈 수 있을 거예요.</strong></p></div></section>
     <section class="game-section" aria-label="플로피버디 게임">
+      <div class="bird-colors" role="group" aria-label="새 색상 선택">
+        <span>플로피 옷장 <strong id="color-name" aria-live="polite">노랑</strong></span>
+        <div class="swatches">
+          <button type="button" data-color="yellow" style="--swatch:#f1c65b" aria-label="노랑" aria-pressed="true">✓</button>
+          <button type="button" data-color="pink" style="--swatch:#ec91b1" aria-label="분홍" aria-pressed="false"></button>
+          <button type="button" data-color="blue" style="--swatch:#78b7ec" aria-label="하늘" aria-pressed="false"></button>
+          <button type="button" data-color="purple" style="--swatch:#b29ae3" aria-label="보라" aria-pressed="false"></button>
+          <button type="button" data-color="mint" style="--swatch:#70c9ab" aria-label="민트" aria-pressed="false"></button>
+        </div>
+      </div>
       <div class="game-top"><span><i></i> THE SKY IS YOURS</span><span>01 / ENDLESS</span></div>
       <div class="game-frame" id="frame">
         <canvas id="game" width="480" height="640" tabindex="0" aria-label="플로피버디. 스페이스바 또는 터치로 날기. P 키로 일시정지."></canvas>
