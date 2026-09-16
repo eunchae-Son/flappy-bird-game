@@ -87,7 +87,22 @@ function update(dt) {
   elapsed+=dt; spawn-=dt; bird.v+=960*dt; bird.y+=bird.v*dt;
   const speed = 155 + Math.min(score*3,65);
   if(spawn<=0) {
-    const gap=174-Math.min(score*1.3,26), top=105+Math.random()*(ground-gap-190);
+    // Mix roomy and tight passages, then gradually narrow both limits.
+    const difficulty = Math.min(score / 25, 1);
+    const minGap = 145 - difficulty * 20;
+    const maxGap = 215 - difficulty * 25;
+    const gap = minGap + Math.random() * (maxGap - minGap);
+    let minCenter = 90 + gap / 2;
+    let maxCenter = ground - 80 - gap / 2;
+    const previous = pipes[pipes.length - 1];
+    if(previous) {
+      // Avoid a sudden large climb or dive immediately before a tight gap.
+      const previousCenter = (previous.top + previous.bottom) / 2;
+      minCenter = Math.max(minCenter, previousCenter - 100);
+      maxCenter = Math.min(maxCenter, previousCenter + 100);
+    }
+    const center = minCenter + Math.random() * (maxCenter - minCenter);
+    const top = center - gap / 2;
     pipes.push({x:W+10,top,bottom:top+gap,passed:false}); spawn=1.65;
   }
   for(const p of pipes) {
