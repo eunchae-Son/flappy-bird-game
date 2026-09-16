@@ -9,6 +9,11 @@ $('best').textContent = String(best).padStart(2, '0');
 let state = 'ready', bird, pipes, score, elapsed, spawn, last = 0, scenery = 0;
 let sound = false, audio;
 const birdColors = {
+  red: {name:'빨강',body:'#ef7777',belly:'#ffd0c9',wing:'#ce515f',tail:'#b94150'},
+  orange: {name:'주황',body:'#f5a45e',belly:'#ffdfb0',wing:'#d9803e',tail:'#be692e'},
+  green: {name:'초록',body:'#85c76e',belly:'#d7edb9',wing:'#5c9e4f',tail:'#498642'},
+  indigo: {name:'남색',body:'#7b88d3',belly:'#d4dcff',wing:'#5966ad',tail:'#465394'},
+  rainbow: {name:'무지개',body:'#f1c65b',belly:'#ffffff80',wing:'#ffffff55',tail:'#a77cdb'},
   yellow: {name:'노랑',body:'#f1c65b',belly:'#ffe197',wing:'#deac43',tail:'#d7a943'},
   pink: {name:'분홍',body:'#ec91b1',belly:'#ffd0e1',wing:'#cf6e94',tail:'#bf5e85'},
   blue: {name:'하늘',body:'#78b7ec',belly:'#c6e6ff',wing:'#5092cf',tail:'#447fb8'},
@@ -118,8 +123,14 @@ function draw() {
   ctx.save();ctx.translate(bird.x,by);ctx.rotate(state==='playing'?Math.max(-.35,Math.min(1.1,bird.v/650)):0);
   ellipse(-3,4,22,20,'#b6a44b33');
   const colors = birdColors[birdColor];
+  let bodyPaint = colors.body;
+  if(birdColor === 'rainbow') {
+    bodyPaint = ctx.createLinearGradient(-18,-16,18,16);
+    ['#ef7777','#f5a45e','#f1c65b','#85c76e','#78b7ec','#7b88d3','#b29ae3']
+      .forEach((color,index)=>bodyPaint.addColorStop(index/6,color));
+  }
   ctx.fillStyle=colors.tail;ctx.beginPath();ctx.moveTo(-17,-2);ctx.lineTo(-30,-12);ctx.lineTo(-26,7);ctx.closePath();ctx.fill();
-  ellipse(0,0,22,19,colors.body);ellipse(5,5,15,12,colors.belly);
+  ellipse(0,0,22,19,bodyPaint);ellipse(5,5,15,12,colors.belly);
   ellipse(-10,5+Math.sin(scenery*20)*3,11,7,colors.wing);
   ellipse(10,-6,7,8,'#fffbed');ellipse(12,-6,3,4,'#274834');ellipse(13,-7,1,1,'white');
   ctx.fillStyle='#e5894b';ctx.beginPath();ctx.moveTo(20,-1);ctx.lineTo(31,3);ctx.lineTo(20,7);ctx.closePath();ctx.fill();
